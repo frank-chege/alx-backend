@@ -16,7 +16,7 @@ class LRUCache(BaseCaching):
         if len(self.cache_data) >= self.MAX_ITEMS:
             #remove the lru item
             removed_key = self.access_list[0]
-            self.access_list.pop(removed_key)
+            self.cache_data.pop(removed_key)
             print(f'DISCARD: {removed_key}')
     
         self.cache_data[key] = item
