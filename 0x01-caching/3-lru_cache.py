@@ -30,5 +30,7 @@ class LRUCache(BaseCaching):
             return None
         else:
             #add the accessed key to a list to know the most recently used
+            if key in self.access_list:
+                self.access_list.pop(key)
             self.access_list.append(key)
             return value
