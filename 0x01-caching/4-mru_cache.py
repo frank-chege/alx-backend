@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-'''implements the lru caching algorithm'''
+'''implements the mru caching algorithm'''
 
 from base_caching import BaseCaching
 
 class LRUCache(BaseCaching):
-    '''implements lru caching'''
+    '''implements mru caching'''
     def __init__(self):
         super().__init__()
         self.access_list = []
@@ -14,9 +14,8 @@ class LRUCache(BaseCaching):
         if key is None or item is None:
             return
         if len(self.cache_data) >= self.MAX_ITEMS:
-            #remove the lru item
-            removed_key = self.access_list[0]
-            self.access_list.pop(0)
+            #remove the mru item
+            removed_key = self.access_list.pop()
             self.cache_data.pop(removed_key)
             print(f'DISCARD: {removed_key}')
     
