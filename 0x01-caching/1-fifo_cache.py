@@ -17,8 +17,8 @@ class FIFOCache(BaseCaching):
             first_key = next(iter(self.cache_data))
             self.cache_data.pop(first_key)
             print(f'DISCARD: {first_key}')
-        else:
-            self.cache_data[key] = item
+    
+        self.cache_data[key] = item
     
     def get(self, key):
         '''returns the value of the given key'''
