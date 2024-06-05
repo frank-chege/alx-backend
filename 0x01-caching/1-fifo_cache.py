@@ -12,7 +12,7 @@ class FIFOCache(BaseCaching):
         '''adds an item to the cache'''
         if key is None or item is None:
             return
-        if len(self.cache_data) > self.MAX_ITEMS:
+        if len(self.cache_data) >= self.MAX_ITEMS:
             #remove the first item
             first_key = next(iter(self.cache_data))
             self.cache_data.pop(first_key)
