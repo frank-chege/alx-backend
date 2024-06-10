@@ -7,6 +7,8 @@ app = __import__('0-app').app
 class Config:
     '''configure the app'''
     LANGUAGES = ["en", "fr"]
+    BABEL_DEFAULT_LOCALE = 'en'
+    
     def __init__(self, app) -> None:
         app.config['BABEL_DEFAULT_LOCALE'] = 'en'
         app.config['BABEL_SUPPORTED_LOCALES'] = self.LANGUAGES
