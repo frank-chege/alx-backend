@@ -9,3 +9,6 @@ class Config:
         app.config['BABEL_DEFAULT_LOCALE'] = 'en'
         app.config['BABEL_SUPPORTED_LOCALES'] = self.LANGUAGES
         app.config['DEFAULT_TIMEZONE'] = 'UTC'
+
+app = __import__('0-app.py').app
+app = Config(app)
