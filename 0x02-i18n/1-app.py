@@ -8,7 +8,7 @@ class Config:
     '''configure the app'''
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = 'en'
-    DEFAULT_TIMEZONE = 'UTC'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
     
     def __init__(self, app) -> None:
         app.config['BABEL_DEFAULT_LOCALE'] = self.BABEL_DEFAULT_LOCALE
