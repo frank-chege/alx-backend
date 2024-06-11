@@ -49,6 +49,8 @@ def get_locale():
     if locale is not None:
         return locale
     if g.user is not None:
+        if g.user['locale'] not in app.config['LANGUAGES']:
+            return app.config['BABEL_DEFAULT_LOCALE']
         return g.user['locale']
     else:
         return request.accept_languages.best_match(app.config['LANGUAGES'])
