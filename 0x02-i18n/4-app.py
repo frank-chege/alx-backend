@@ -3,15 +3,30 @@
 from flask import request, render_template, Flask
 from flask_babel import Babel
 
-get_locale = __import__('3-app').get_locale
+class Config:
+    '''configure the app'''
+    LANGUAGES = ["en", "fr"]
+    BABEL_DEFAULT_LOCALE = 'en'
+    DEFAULT_TIMEZONE = 'UTC'
 
-def check_locale(get_locale):
-    def wrapper():
-        locale = request.args.get('locale')
-        if locale == 'fr':
-            return 'fr'
-        else:
-            return request.accept_languages.best_match(app.config['LANGUAGES'])
-    return wrapper
+app = Flask(__name__)
+app.config.from_object(Config)
+babel = Babel(app)
 
-get_locale = check_locale(get_locale)
+def get_locale():
+    '''gets the locale'''
+    locale = request.args.get('locale')
+    if locale == 'fr':
+        return 'fr'
+    else:
+        return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+babel.init_app(app, locale_selector=get_locale)
+
+@app.route('/', methods=['GET'])
+def index():
+    '''returns the index page'''
+    return render_template('0-index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
