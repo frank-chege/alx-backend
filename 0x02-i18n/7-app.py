@@ -3,6 +3,7 @@
 from flask import request, render_template, Flask, g
 from flask_babel import Babel
 import pytz
+from datetime import datetime
 
 class Config:
     '''configure the app'''
@@ -42,7 +43,8 @@ def before_request():
     else:
         g.user = None
         bool = False
-    return render_template('0-index.html', bool=bool, name=name)
+    cur_time = get_local_time()
+    return render_template('7-index.html', bool=bool, name=name, local_time=cur_time)
 
 def get_locale():
     '''gets the locale'''
@@ -74,14 +76,18 @@ def get_timezone():
         return time_zone
     return app.config['DEFAULT_TIMEZONE']
 
-
+def get_local_time():
+    tz = get_timezone()
+    time = pytz.timezone(tz)
+    cur_time = datetime.now(time)
+    return cur_time
 
 babel.init_app(app, locale_selector=get_locale)
 
 @app.route('/', methods=['GET'])
 def index():
     '''returns the index page'''
-    return render_template('5-index.html')
+    return render_template('7-index.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) 

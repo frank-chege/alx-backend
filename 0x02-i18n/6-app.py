@@ -2,6 +2,7 @@
 '''get the locale'''
 from flask import request, render_template, Flask, g
 from flask_babel import Babel
+from datetime import datetime
 
 class Config:
     '''configure the app'''
@@ -60,7 +61,7 @@ babel.init_app(app, locale_selector=get_locale)
 @app.route('/', methods=['GET'])
 def index():
     '''returns the index page'''
-    return render_template('5-index.html')
+    return render_template('6-index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
