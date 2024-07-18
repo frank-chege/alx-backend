@@ -1,35 +1,39 @@
 #!/usr/bin/env python3
-'''implements the mru caching algorithm'''
+"""Most Recently Used caching module.
+"""
+from collections import OrderedDict
 
 from base_caching import BaseCaching
 
+
 class MRUCache(BaseCaching):
-    '''implements mru caching'''
+    """Represents an object that allows storing and
+    retrieving items from a dictionary with an MRU
+    removal mechanism when the limit is reached.
+    """
     def __init__(self):
+        """Initializes the cache.
+        """
         super().__init__()
-        self.access_list = []
-    
+        self.cache_data = OrderedDict()
+
     def put(self, key, item):
-        '''adds an item to the cache'''
+        """Adds an item in the cache.
+        """
         if key is None or item is None:
             return
-        if len(self.cache_data) >= self.MAX_ITEMS:
-            #remove the mru item
-            removed_key = self.access_list.pop()
-            self.cache_data.pop(removed_key)
-            print(f'DISCARD: {removed_key}')
-    
-        self.cache_data[key] = item
-    
-    def get(self, key):
-        '''returns the value of the given key'''
-
-        value = self.cache_data.get(key)
-        if key is None or value is None:
-            return None
+        if key not in self.cache_data:
+            if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
+                mru_key, _ = self.cache_data.popitem(False)
+                print("DISCARD:", mru_key)
+            self.cache_data[key] = item
+            self.cache_data.move_to_end(key, last=False)
         else:
-            #add the accessed key to a list to know the most recently used
-            if key in self.access_list:
-                self.access_list.remove(key)
-            self.access_list.append(key)
-            return value
+            self.cache_data[key] = item
+
+    def get(self, key):
+        """Retrieves an item by key.
+        """
+        if key is not None and key in self.cache_data:
+            self.cache_data.move_to_end(key, last=False)
+        return self.cache_data.get(key, None)

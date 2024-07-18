@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-'''introduction to pagination'''
+"""Pagination helper function.
+"""
 from typing import Tuple
 
-def index_range(page:int, page_size:int)->Tuple:
-    '''returns start abd end index'''
-    end_idx = page * page_size
-    start_idx = end_idx - page_size
-    return (start_idx, end_idx)
+
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
+    """Retrieves the index range from a given page and page size.
+    """
+    start = (page - 1) * page_size
+    end = start + page_size
+    return (start, end)
